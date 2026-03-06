@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "v1",
+  "instance": {
+    "instanceId": "set-me",
+    "agentId": "codex-main",
+    "userId": "set-me",
+    "teamIds": []
+  },
+  "scopes": {
+    "allowedRead": [
+      "private:set-me",
+      "global"
+    ],
+    "allowedWrite": [
+      "private:set-me",
+      "global"
+    ]
+  },
+  "paths": {
+    "events": "memory/events.jsonl",
+    "globalMemory": "memory/global/CODEX_MEMORY.md",
+    "teamRoot": "memory/teams",
+    "userRoot": "memory/users"
+  },
+  "promotion": {
+    "enabled": true,
+    "toGlobalRequiresEvidence": true,
+    "defaultMaxItems": 50
+  },
+  "extensions": {
+    "customFieldsAllowed": true
+  }
+}

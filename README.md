@@ -1,51 +1,73 @@
 # codex-memory-system
 
-A **simple memory layer for Codex CLI focused on code development**.
+A flexible memory layer for Codex CLI focused on code development, with support for:
+- multiple instances (different computers)
+- multiple users
+- scoped memory sharing (private/team/global)
 
-## Design goals
-- Minimal setup
-- Better coding continuity across long sessions
-- Fast capture of durable engineering lessons
+## Core idea
+Use **append-only events** as source-of-truth, then promote into curated memories.
 
-## What this gives you
-- `CODEX_MEMORY.md` (curated coding memory)
-- `memory/YYYY-MM-DD.md` (daily dev log)
-- `memory/session-state.md` (current checkpoint)
-- `.codex-memory/scripts/codex_with_memory.sh` (run Codex with memory context)
-- `.codex-memory/scripts/check_daily_next_actions.py` (daily log hygiene)
-- `.codex-memory/scripts/session_state_checkpoint.py` (quick checkpoint writer)
+This enables cross-user compounding without leaking private context.
 
-## Install into a repo
+## Files installed into your repo
+- `CODEX_MEMORY.md` (local curated coding memory)
+- `memory.config.json` (identity, scope ACLs, paths, promotion rules)
+- `memory/YYYY-MM-DD.md` (daily log)
+- `memory/session-state.md` (checkpoint snapshot)
+- `memory/events.jsonl` (append-only scoped events)
+- `.codex-memory/scripts/*` helpers
 
+## Scope model
+Each event has scope:
+- `private:<userId>`
+- `team:<teamId>`
+- `global`
+
+Reads/writes are controlled by `memory.config.json`:
+- `scopes.allowedRead`
+- `scopes.allowedWrite`
+
+## Install
 ```bash
 git clone https://github.com/El-Ingenier0/codex-memory-system.git
 cd codex-memory-system
 ./scripts/bootstrap.sh /path/to/your/repo
 ```
 
-## Use it during coding
+Then edit `/path/to/your/repo/memory.config.json`:
+- set `instance.instanceId`
+- set `instance.userId`
+- set team memberships + scope ACLs
 
+## Run Codex with memory
 ```bash
 cd /path/to/your/repo
-./.codex-memory/scripts/codex_with_memory.sh "Implement feature X with tests"
+./.codex-memory/scripts/codex_with_memory.sh "Implement X with tests"
 ```
 
-The wrapper prepends:
+Wrapper includes:
 - `CODEX_MEMORY.md`
-- today’s daily note tail
-- recent learnings tail
+- recent learnings
+- ACL-filtered scoped context (from events)
 
-and asks Codex to end with `LEARNINGS:` bullets. Those bullets are appended to `memory/codex_learnings.md`.
+## Key scripts
+- `events_append.py` — append scoped events
+- `context_build.py` — build ACL-aware shared context block
+- `promote_scoped.py` — promote scoped events to curated memory files
+- `session_state_checkpoint.py` — write pre-compaction/session checkpoint
+- `session_recover_tail.py` — bounded JSONL recovery
+- `check_daily_next_actions.py` — enforce daily note hygiene
 
-## Recommended workflow
-1. Run task through wrapper
-2. Verify tests/build
-3. Append durable note to daily file
-4. Keep `## Next Actions` updated
-5. Update `CODEX_MEMORY.md` when a learning repeats
+## Example: cross-user compounding
+User A discovers a durable build fix, writes event to `team:platform` with evidence.
+User B reads team-scoped context automatically via wrapper.
+A promoter run materializes the fix into `memory/teams/platform/CODEX_MEMORY.md`.
 
-## Keep it simple
-This repo intentionally avoids heavy orchestration. It is a lightweight coding memory scaffold, not an agent platform.
+## Flexibility-first notes
+- schema allows custom fields (`extensions.customFieldsAllowed`)
+- path layout is configurable under `paths`
+- promotion policy is configurable under `promotion`
 
 ## License
 MIT
