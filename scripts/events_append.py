@@ -19,6 +19,7 @@ def main() -> int:
     ap.add_argument("--project", default="")
     ap.add_argument("--evidence", action="append", default=[])
     ap.add_argument("--tag", action="append", default=[])
+    ap.add_argument("--confirmer", default="", help="userId of confirmer for promotion gates")
     ap.add_argument("--field", action="append", default=[], help="extra key=value")
     args = ap.parse_args()
 
@@ -41,6 +42,7 @@ def main() -> int:
         "project": args.project,
         "evidence": args.evidence,
         "tags": args.tag,
+        "confirmer": args.confirmer,
         "instanceId": inst.get("instanceId", "unknown"),
         "agentId": inst.get("agentId", "codex"),
         "userId": inst.get("userId", "unknown")

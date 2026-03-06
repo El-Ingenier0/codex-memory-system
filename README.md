@@ -40,6 +40,9 @@ Then edit `/path/to/your/repo/memory.config.json`:
 - set `instance.userId`
 - set team memberships + scope ACLs
 
+And edit `/path/to/your/repo/memory.policy.json`:
+- for now (single team), default policy requires **evidence + confirmer** for team/global promotion.
+
 ## Run Codex with memory
 ```bash
 cd /path/to/your/repo

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "v1",
+  "teams": {
+    "default": {
+      "promotion": {
+        "requireEvidence": true,
+        "requireConfirmer": true
+      }
+    }
+  },
+  "global": {
+    "promotion": {
+      "requireEvidence": true,
+      "requireConfirmer": true
+    }
+  }
+}

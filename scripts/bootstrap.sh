@@ -12,6 +12,7 @@ mkdir -p "$TARGET/memory" "$TARGET/.codex-memory/scripts"
 
 [[ -f "$TARGET/CODEX_MEMORY.md" ]] || cp "$ROOT/templates/CODEX_MEMORY.md" "$TARGET/CODEX_MEMORY.md"
 [[ -f "$TARGET/memory.config.json" ]] || cp "$ROOT/templates/memory.config.json" "$TARGET/memory.config.json"
+[[ -f "$TARGET/memory.policy.json" ]] || cp "$ROOT/templates/memory.policy.json" "$TARGET/memory.policy.json"
 cp "$ROOT/scripts/session_state_checkpoint.py" "$TARGET/.codex-memory/scripts/"
 cp "$ROOT/scripts/check_daily_next_actions.py" "$TARGET/.codex-memory/scripts/"
 cp "$ROOT/scripts/session_recover_tail.py" "$TARGET/.codex-memory/scripts/"
