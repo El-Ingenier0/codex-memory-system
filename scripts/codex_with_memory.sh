@@ -10,7 +10,7 @@ fi
 ROOT="$(pwd)"
 TODAY="$(date +%F)"
 DAILY="$ROOT/memory/$TODAY.md"
-MEMORY="$ROOT/MEMORY.md"
+MEMORY="$ROOT/CODEX_MEMORY.md"
 LEARNINGS="$ROOT/memory/codex_learnings.md"
 
 mkdir -p "$ROOT/memory"
@@ -27,7 +27,7 @@ EOF
 CTX_FILE="$(mktemp)"
 {
   echo "### Curated memory";
-  [[ -f "$MEMORY" ]] && tail -n 120 "$MEMORY" || echo "(missing MEMORY.md)";
+  [[ -f "$MEMORY" ]] && tail -n 120 "$MEMORY" || echo "(missing CODEX_MEMORY.md)";
   echo;
   echo "### Recent learnings";
   tail -n 80 "$LEARNINGS";

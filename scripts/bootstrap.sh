@@ -10,14 +10,10 @@ fi
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 mkdir -p "$TARGET/memory" "$TARGET/.codex-memory/scripts"
 
-for f in AGENTS.md SOUL.md MEMORY.md TOOLS.md SECURITY.md FRICTION.md PREDICTIONS.md; do
-  [[ -f "$TARGET/$f" ]] || cp "$ROOT/templates/$f" "$TARGET/$f"
-done
+[[ -f "$TARGET/CODEX_MEMORY.md" ]] || cp "$ROOT/templates/CODEX_MEMORY.md" "$TARGET/CODEX_MEMORY.md"
 cp "$ROOT/scripts/session_state_checkpoint.py" "$TARGET/.codex-memory/scripts/"
-cp "$ROOT/scripts/session_recover_tail.py" "$TARGET/.codex-memory/scripts/"
 cp "$ROOT/scripts/check_daily_next_actions.py" "$TARGET/.codex-memory/scripts/"
 cp "$ROOT/scripts/codex_with_memory.sh" "$TARGET/.codex-memory/scripts/"
-cp "$ROOT/scripts/promote_learnings.py" "$TARGET/.codex-memory/scripts/"
 chmod +x "$TARGET/.codex-memory/scripts/"*.py "$TARGET/.codex-memory/scripts/"*.sh
 
 TODAY="$(date +%F)"
